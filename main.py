@@ -7,6 +7,7 @@ from flask.cli import AppGroup
 
 # import "packages" from "this" project
 from __init__ import app, db, cors  # Definitions initialization
+from flask_cors import CORS
 
 
 # setup APIs
@@ -14,6 +15,8 @@ from api.covid import covid_api # Blueprint import api definition
 from api.joke import joke_api # Blueprint import api definition
 from api.user import user_api # Blueprint import api definition
 from api.player import player_api
+# MY API
+from api.housepriceAPI import houseprice_api # Blueprint import api definition
 # database migrations
 from model.users import initUsers
 from model.players import initPlayers
@@ -30,6 +33,7 @@ app.register_blueprint(joke_api) # register api routes
 app.register_blueprint(covid_api) # register api routes
 app.register_blueprint(user_api) # register api routes
 app.register_blueprint(player_api)
+app.register_blueprint(houseprice_api) # register my api route
 app.register_blueprint(app_projects) # register app pages
 
 @app.errorhandler(404)  # catch for URL not found
@@ -49,7 +53,7 @@ def table():
 def before_request():
     # Check if the request came from a specific origin
     allowed_origin = request.headers.get('Origin')
-    if allowed_origin in ['http://localhost:4100', 'http://127.0.0.1:4100', 'https://nighthawkcoders.github.io', 'https://eshaank1.github.io']:
+    if allowed_origin in ['http://localhost:4200', 'http://127.0.0.1:4200', 'https://nighthawkcoders.github.io', 'https://eshaank1.github.io']:
         cors._origins = allowed_origin
 
 # Create an AppGroup for custom commands
